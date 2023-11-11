@@ -1,6 +1,7 @@
 # Fast Survey
 
-Microservice for user surveys. It stores data in MongoDB database.
+Microservice for user surveys. All user data is validated
+before being stored in MongoDB database.
 
 ## Technologies
 
@@ -10,9 +11,6 @@ Microservice for user surveys. It stores data in MongoDB database.
 - PyMongo
 - MongoDB
 - Pytest
-- Jinja2
-- Bootstrap 5
-- CSS
 - Uvicorn
 - Docker
 
@@ -20,21 +18,29 @@ Microservice for user surveys. It stores data in MongoDB database.
 
 - pep8
 - flake8
+- mypy
 - black
 - pymarkdown
 
 ## How to run
 
 1. Clone the repository
-2. To run on PostgreSQL instead of SQLite (default), put `.env` file into
-`fastnames` folder with such content:
+2. Put `.env` file into `fast_survey` folder with such content:
 
     ```env
-    POSTGRES_DB=db_name
-    POSTGRES_USER=db_user
-    POSTGRES_PASSWORD=db_pswd
-    DB_PORT=5432
-    DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres_db:${DB_PORT}/${POSTGRES_DB}
+    # API
+    DATABASE_URL=mongodb://user:password@mongo:27017/
+    DATABASE_URL_TEST=mongodb://user:password@localhost:27017/
+
+    # MONGO
+    MONGO_INITDB_ROOT_USERNAME=user
+    MONGO_INITDB_ROOT_PASSWORD=password
+
+    # ME
+    ME_CONFIG_BASICAUTH_USERNAME=user
+    ME_CONFIG_BASICAUTH_PASSWORD=password
+    ME_CONFIG_MONGODB_URL=mongodb://user:password@mongo:27017/
+
     ```
 
 3. From the root folder run:
@@ -43,13 +49,7 @@ Microservice for user surveys. It stores data in MongoDB database.
     docker compose up
     ```
 
-## Local development and testing
+4. API Documentation - `http://localhost:8000/docs`
+5. To run `pytest` tests activate virtual environment and install dependencies
+   from `fast_survey/requirements.txt`
 
-1. Clone the project, activate virtual environment and install
-dependencies from `fastnames/requirements.txt` file
-2. To test the current functionality run `pytest` command
-
-## TODO
-
-1. Write tests
-2. Update README

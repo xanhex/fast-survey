@@ -5,14 +5,13 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field
 from typing_extensions import Annotated
 
-from fast_survey import config
-
-DATABASE_URL = config.Settings().database_url
-
 PyObjectId = Annotated[str, BeforeValidator(str)]
 
-client = AsyncIOMotorClient(DATABASE_URL)
-db = client.fast_survey_database
+
+def db_init(db_url: str | None = None):
+    """Database init dependacy."""
+    client = AsyncIOMotorClient(db_url)
+    return client.fast_survey_database
 
 
 class Gender(str, Enum):
